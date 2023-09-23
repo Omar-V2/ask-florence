@@ -11,6 +11,9 @@ fastapi = { extras = ["all"], version = "^0.103.1" }
 twilio = "^8.9.0"
 openai = "^0.28.0"
 python-decouple = "^3.8"
+langchain = "^0.0.300"
+faiss-cpu = "^1.7.4"
+tiktoken = "^0.5.1"
 
 [tool.poetry.group.dev.dependencies]
 black = "^23.9.1"
