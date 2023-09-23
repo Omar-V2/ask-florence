@@ -98,7 +98,3 @@ def _add_chat_to_ehr(patient_number: str, chat_url: str) -> None:
 
     # Save the modified document
     doc.save(str(EHR_BASE_PATH / (patient_number + ".docx")))
-
-
-session = ChatSession(patient_number="4857773456")
-session.query("Was the patient comfortable yesterday?")
