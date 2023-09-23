@@ -83,7 +83,6 @@ def _fetch_and_parse_ehr(patient_number: str) -> list[str]:
     for paragraph in doc.paragraphs:
         fullText.append(paragraph.text)
 
-<<<<<<< HEAD
     return '\n'.join(fullText).split("---")
 
 
@@ -103,6 +102,3 @@ def _add_chat_to_ehr(patient_number: str, chat_url: str) -> None:
 
 session = ChatSession(patient_number="4857773456")
 session.query("Was the patient comfortable yesterday?")
-=======
-    return "\n".join(fullText).split("---")
->>>>>>> 0a0fe300f956eb1fdc2e5054610d4abffcd25394
