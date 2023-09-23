@@ -26,9 +26,6 @@ class ChatSession:
     def query(self, user_query: str) -> str:
         return self._chain.invoke(user_query)
 
-    def _create_vector_store(self, ehr_entries: list[str]):
-        return FAISS.from_texts(ehr_entries)
-
     def _create_chain(self, vector_store):
         model = ChatOpenAI()
         prompt = ChatPromptTemplate.from_template(PROMPT_TEMPLATE)
@@ -45,5 +42,5 @@ def fetch_and_parse_ehr(patient_id) -> list[str]:
     return ["Jannic is in the hospital."]
 
 
-session = ChatSession("1234")
+session = ChatSession(1234)
 print(session.query("Where is Jannic right now?"))
