@@ -1,12 +1,11 @@
 from operator import itemgetter
 
-from langchain.prompts import ChatPromptTemplate
 from langchain.chat_models import ChatOpenAI
 from langchain.embeddings import OpenAIEmbeddings
+from langchain.prompts import ChatPromptTemplate
 from langchain.schema.output_parser import StrOutputParser
 from langchain.schema.runnable import RunnablePassthrough
 from langchain.vectorstores import FAISS
-
 
 PROMPT_TEMPLATE = """
 Answer the question based only on the following context:
@@ -17,7 +16,6 @@ Question: {question}
 
 
 class ChatSession:
-
     def __init__(self, patient_id: int):
         ehr_entries = fetch_and_parse_ehr(patient_id)
         vector_store = FAISS.from_texts(ehr_entries, embedding=OpenAIEmbeddings())
@@ -25,9 +23,6 @@ class ChatSession:
 
     def query(self, user_query: str) -> str:
         return self._chain.invoke(user_query)
-
-    def _create_vector_store(self, ehr_entries: list[str]):
-        return FAISS.from_texts(ehr_entries)
 
     def _create_chain(self, vector_store):
         model = ChatOpenAI()

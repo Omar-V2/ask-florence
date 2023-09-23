@@ -2,7 +2,6 @@ import logging
 
 from twilio.rest import Client as TwilioClient
 
-
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
