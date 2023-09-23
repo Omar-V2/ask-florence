@@ -1,3 +1,4 @@
+import docx
 from langchain.chat_models import ChatOpenAI
 from langchain.embeddings import OpenAIEmbeddings
 from langchain.prompts import ChatPromptTemplate
@@ -5,90 +6,19 @@ from langchain.schema.output_parser import StrOutputParser
 from langchain.schema.runnable import RunnablePassthrough
 from langchain.vectorstores import FAISS
 
+from constants import BUCKET_NAME
+from utils import get_uk_timestamp_utc_format
+import time
+
+
 from constants import EHR_BASE_PATH
-
-
-import docx
-
-PROMPT_TEMPLATE = """
-Your role is a medical doctor who is using a patient's Electronic Health
-Records to give updates next of kin.
-
-Under no circumstances should you ever give medical advice.
-
-Under no circumstances should you ever give updates on conditions or
-diagnoses which fall into the following categories:
-{condition_deny_categories}
-
-Answer the question based only on the following context taken
-from a patient's Electronic Health Record. Under no circumstances should
-you answer any questions that are not answerable using this context:
-{context}
-
-If you are unable to answer a query based on any of the above constraints,
-you MUST reply with:
-{user_deny_message}
-
-Use the following dictionary of medical terms and their meanings if necessary:
-{medical_dictionary}
-
-Answer the following query:
-{question}
-"""
-
-CONDITION_DENY_CATEGORIES = "\n".join([
-    "Death",
-    "Permanent and Terminal Illness",
-    "Change of Quality of Life"
-])
-
-USER_DENY_MESSAGE = f"""
-I'm sorry, as an AI system I cannot answer your query.
-
-I cannot give you medical advice, or update you with any information on:
-{CONDITION_DENY_CATEGORIES}
-
-Please direct your query to a healthcare professional.
-"""
-
-MEDICAL_DICTIONARY = {
-    "Admission (A&E)": "Entry into the Emergency Room",
-    "AMU": "Acute Medical Unit, a specialized area for urgent care",
-    "Ward Round Notes": "Regular check-up notes by doctors",
-    "Pre-Discharge Assessment": "Final evaluation before sending patient home",
-    "Follow-up": "Next scheduled doctor's appointment",
-    "Plan": "Next steps in treatment or care",
-    "C/O": "Complaining of",
-    "CP": "Chest Pain",
-    "Clin. Ex": "Clinical Examination",
-    "JVP": "Jugular Venous Pressure, related to heart function",
-    "ECG": "Electrocardiogram, a heart test",
-    "ST depression": "A finding on the ECG that may indicate heart issues",
-    "Rx": "Prescription or treatment",
-    "GTN (Glyceryl Trinitrate) spray": "A spray for chest pain",
-    "IV fluids": "Fluids given through a vein",
-    "Clopidogrel": "A blood thinner medication",
-    "Troponin": "A marker in the blood that can indicate heart damage",
-    "FBC": "Full Blood Count, a general blood test",
-    "NAD": "No Apparent Distress or No Abnormality Detected",
-    "ACS": "Acute Coronary Syndrome, a range of conditions related to sudden, reduced blood flow to the heart",
-    "PE": "Pulmonary Embolism, a lung-related condition",
-    "NSTEMI": "Non-ST-elevation myocardial infarction, a type of heart attack",
-    "Angina": "Chest pain due to reduced blood flow to the heart",
-    "SOB": "Shortness of Breath",
-    "Obs": "Observations, usually referring to vital signs like blood pressure and heart rate",
-    "BP": "Blood Pressure",
-    "Mobilising": "Moving around",
-    "CVS": "Cardiovascular System, related to the heart and blood vessels",
-    "MFFD": "Medically Fit For Discharge",
-    "Heparin infusion": "Drip of a blood thinner medication",
-    "Cardiology consult initiated": "Started consultation with heart specialists",
-    "Refer to cardiology": "Send the patient's case to a heart specialist",
-    "Probable Diagnosis": "Most likely medical condition based on current information",
-    "Differential Diagnoses": "List of possible medical conditions that could explain the symptoms",
-    "Preparing for discharge": "Getting ready to leave the hospital",
-    "Drug reconciliation": "Making sure all medications are correctly listed before leaving the hospital"
-}
+from query_constants import (
+    PROMPT_TEMPLATE,
+    CONDITION_DENY_CATEGORIES,
+    USER_DENY_MESSAGE,
+    MEDICAL_DICTIONARY
+)
+from chat_history import upload_chat_history_to_s3
 
 
 class ChatSession:
@@ -97,8 +27,13 @@ class ChatSession:
         self._model = ChatOpenAI()
         self._prompt = ChatPromptTemplate.from_template(PROMPT_TEMPLATE)
 
+        self._chat_key = patient_number + "_" + str(time.time())
+        self._chat_history = []
+        self._chat_url = f"https://{BUCKET_NAME}.s3.amazonaws.com/{self._chat_key}"
+        upload_chat_history_to_s3(self._chat_key, [])
+
     def query(self, user_query: str) -> str:
-        ehr_entries = fetch_and_parse_ehr(self._patient_number)
+        ehr_entries = _fetch_and_parse_ehr(self._patient_number)
         vector_store = FAISS.from_texts(ehr_entries, embedding=OpenAIEmbeddings())
         chain = (
             {
@@ -114,10 +49,30 @@ class ChatSession:
             | self._model
             | StrOutputParser()
         )
-        return chain.invoke(user_query)
+        response = chain.invoke(user_query)
+        self._update_chat_history(user_query, response)
+        return response
+
+    def _update_chat_history(self, user_query: str, response: str) -> None:
+        # Add user query
+        self._chat_history.append((
+            get_uk_timestamp_utc_format(),
+            "Next of Kin",
+            user_query
+        ))
+
+        # Add response
+        self._chat_history.append((
+            get_uk_timestamp_utc_format(),
+            "Florence",
+            response
+        ))
+
+        upload_chat_history_to_s3(self._chat_key, self._chat_history)
+        _add_chat_to_ehr(self._patient_number, self._chat_url)
 
 
-def fetch_and_parse_ehr(patient_number: str) -> list[str]:
+def _fetch_and_parse_ehr(patient_number: str) -> list[str]:
     doc = docx.Document(str(EHR_BASE_PATH / (patient_number + ".docx")))
 
     fullText = []
@@ -127,10 +82,19 @@ def fetch_and_parse_ehr(patient_number: str) -> list[str]:
     return '\n'.join(fullText).split("---")
 
 
-session = ChatSession("4857773456")
-print("Did the patient get discharged?")
-print(session.query("Did the patient get discharged?"))
-print("Did the patient get a cancer diagnosis?")
-print(session.query("Did the patient get a cancer diagnosis?"))
-print("Is the patient dead?")
-print(session.query("Is the patient dead?"))
+def _add_chat_to_ehr(patient_number: str, chat_url: str) -> None:
+    doc = docx.Document(str(EHR_BASE_PATH / (patient_number + ".docx")))
+    timestamp = get_uk_timestamp_utc_format()
+
+    # Add a new paragraph with '---'
+    doc.add_paragraph(
+        f"---\n[{timestamp}]\n\nNext of kin initiated a conversation with Florence."
+        f" View chat at:\n{chat_url}"
+    )
+
+    # Save the modified document
+    doc.save(str(EHR_BASE_PATH / (patient_number + ".docx")))
+
+
+session = ChatSession(patient_number="4857773456")
+session.query("Was the patient comfortable yesterday?")
