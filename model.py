@@ -31,7 +31,7 @@ class HealthcareProfessional(SQLModel, table=True):
 def init_db():
     engine = create_engine(DATABASE_URL)
     with Session(engine) as session:
-        session.execute('PRAGMA foreign_keys=on')
+        session.execute("PRAGMA foreign_keys=on")
         session.commit()
         SQLModel.metadata.create_all(engine)
 

@@ -8,6 +8,7 @@ from langchain.vectorstores import FAISS
 from model import DATABASE_URL, Patient
 
 from sqlmodel import create_engine, Session
+
 ENGINE = create_engine(DATABASE_URL)
 
 PROMPT_TEMPLATE = """
@@ -41,12 +42,10 @@ class ChatSession:
 
 def fetch_and_parse_ehr(patient_id) -> list[str]:
     with Session(ENGINE) as session:
-        patient = session.get(Patient, patient_id)  # Replace Patient with your actual Patient model
+        patient = session.get(
+            Patient, patient_id
+        ) 
         if patient:
             return patient.ehr.split("---")
         else:
             raise ValueError(f"Patient with {patient_id} has no EHR")
-
-
-session = ChatSession(1)
-print(session.query("How was the patient on day 5?"))
