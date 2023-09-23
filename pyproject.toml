@@ -17,6 +17,7 @@ tiktoken = "^0.5.1"
 sqlmodel = "^0.0.8"
 uvicorn = {extras = ["standard"], version = "^0.23.2"}
 python-multipart = "^0.0.6"
+python-docx = "^0.8.11"
 
 [tool.poetry.group.dev.dependencies]
 black = "^23.9.1"

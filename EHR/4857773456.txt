@@ -1,0 +1,175 @@
+---
+[2023-09-23T08:15]
+
+Admission Notes:
+
+- C/O chest pain (CP) and breathlessness
+- Clin. Ex: Raised JVP, Heart sounds normal
+- ECG: ST depression
+- Rx: Aspirin 300 mg, GTN (Glyceryl Trinitrate) spray, IV fluids, Clopidogrel 200mg
+---
+[2023-09-23T10:08]
+
+Blood Tests:
+
+- Troponin: 50 ng/L (raised)
+- FBC: NAD
+
+Differential Diagnoses:
+
+- Acute Coronary Syndrome (ACS)
+- Pulmonary Embolism (PE)
+- Heart Failure
+- Anxiety
+---
+[2023-09-23T11:30]
+
+- ECG: Possible ischaemia
+- Cardiology consult initiated
+
+Probable Diagnosis:
+
+- ACS given the raised Troponins and ECG changes
+    - Possible NSTEMI
+---
+[2023-09-23T11:45]
+
+- Bloods: Troponin now 80 ng/L (further raised)
+- Start Heparin infusion
+
+Plan:
+
+- Admit to AMU, refer to cardiology
+---
+[2023-09-24T08:40]
+
+In AMU
+
+Ward Round Notes:
+
+- Pt improved but remains SOB
+- Obs stable
+- Eating & drinking okay
+
+Differential Diagnoses:
+
+- NSTEMI
+- Unstable Angina
+
+Probable Diagnosis:
+
+- ACS, less likely Unstable Angina given improving symptoms but persistently raised Troponins
+
+Plan:
+
+- Continue medical treatment, prep for coronary angiogram
+---
+[2023-09-25T08:30]
+
+08:30 Ward Round Notes:
+
+- Pt improving
+- BP within normal range
+- Eating & drinking normally
+
+Differential Diagnoses:
+
+- ACS
+- Stable Angina
+- Anxiety
+
+Probable Diagnosis:
+
+- Unstable transitioning to Stable Angina
+
+Blood Tests:
+
+- Troponin: 40 ng/L (improving but still raised)
+---
+[2023-09-25T11:00]
+
+- Mobilising with aid
+- Obs stable,
+- Plan: continue current treamtne
+---
+[2023-09-25T18:00]
+
+- Pt complaining of acute chest pain, increased breathlessness
+- ECG: New changes, Troponin rises to 90 ng/L
+
+### Probable Diagnosis:
+
+- Acute deterioration in ACS, possibly new cardiac event
+
+### Plan:
+
+- Urgent cardiology referral, possible intervention
+
+---
+[2023-09-26T08:50]
+
+08:50 Ward Round Notes:
+
+- Post-angiogram, Pt PAW, improved
+- CVS stable, chest clear
+- Bowel movement normal
+
+Angiogram: 
+
+- No obvious
+
+Probable Diagnosis:
+
+- Post-ACS recovery
+
+Blood Tests:
+
+- Troponin: 30 ng/L (improving)
+---
+[2023-09-26T12:45]
+
+- Preparing for discharge
+- Awaiting final lab results
+
+Plan:
+
+- Prepare for discharge if stable
+
+---
+[2023-09-27T08:20]
+
+Ward Round Notes:
+
+- Pt appears well
+- All systems NAD
+- Eating & drinking well
+- Fluid balance maintained
+
+### Probable Diagnosis:
+
+- Stable, recovering post-ACS
+
+### Plan:
+
+- Finalise discharge, complete drug reconciliation
+- MFFD
+
+---
+[2023-09-28T08:35]
+
+Pre-Discharge Assessment:
+
+- Pt appears ready for discharge
+- All systems NAD
+- Eating & drinking well
+
+Discharge Summary:
+
+- Arrange follow-up and discharge meds
+
+---
+[2023-09-29T08:35]
+
+Follow-up:
+
+- Outpatient appointment booked for 31/10/2023

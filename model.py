@@ -15,10 +15,9 @@ class NextOfKin(SQLModel, table=True):
 
 
 class Patient(SQLModel, table=True):
-    id: Optional[int] = Field(default=None, primary_key=True)
+    patient_number: str = Field(default=None, primary_key=True)
     first_name: str
     last_name: str
-    ehr: str
     next_of_kin_id: Optional[int] = Field(default=None, foreign_key="nextofkin.id")
     healthcare_professional_id: int = Field(foreign_key="healthcareprofessional.id")
 
