@@ -36,11 +36,9 @@ Answer the following query:
 {question}
 """
 
-CONDITION_DENY_CATEGORIES = "\n".join([
-    "Death",
-    "Permanent and Terminal Illness",
-    "Change of Quality of Life"
-])
+CONDITION_DENY_CATEGORIES = "\n".join(
+    ["Death", "Permanent and Terminal Illness", "Change of Quality of Life"]
+)
 
 USER_DENY_MESSAGE = f"""
 I'm sorry, as an AI system I cannot answer your query.
@@ -87,7 +85,7 @@ MEDICAL_DICTIONARY = {
     "Probable Diagnosis": "Most likely medical condition based on current information",
     "Differential Diagnoses": "List of possible medical conditions that could explain the symptoms",
     "Preparing for discharge": "Getting ready to leave the hospital",
-    "Drug reconciliation": "Making sure all medications are correctly listed before leaving the hospital"
+    "Drug reconciliation": "Making sure all medications are correctly listed before leaving the hospital",
 }
 
 
@@ -102,13 +100,17 @@ class ChatSession:
         vector_store = FAISS.from_texts(ehr_entries, embedding=OpenAIEmbeddings())
         chain = (
             {
-                "condition_deny_categories": lambda _: "\n,".join(CONDITION_DENY_CATEGORIES),
+                "condition_deny_categories": lambda _: "\n,".join(
+                    CONDITION_DENY_CATEGORIES
+                ),
                 "context": vector_store.as_retriever(),
                 "user_deny_message": lambda _: USER_DENY_MESSAGE,
                 "question": RunnablePassthrough(),
                 "medical_dictionary": (
-                    lambda _: "\n".join(f"{k}: {v}" for k, v in MEDICAL_DICTIONARY.items())
-                )
+                    lambda _: "\n".join(
+                        f"{k}: {v}" for k, v in MEDICAL_DICTIONARY.items()
+                    )
+                ),
             }
             | self._prompt
             | self._model
@@ -124,13 +126,4 @@ def fetch_and_parse_ehr(patient_number: str) -> list[str]:
     for paragraph in doc.paragraphs:
         fullText.append(paragraph.text)
 
-    return '\n'.join(fullText).split("---")
-
-
-session = ChatSession("4857773456")
-print("Did the patient get discharged?")
-print(session.query("Did the patient get discharged?"))
-print("Did the patient get a cancer diagnosis?")
-print(session.query("Did the patient get a cancer diagnosis?"))
-print("Is the patient dead?")
-print(session.query("Is the patient dead?"))
+    return "\n".join(fullText).split("---")

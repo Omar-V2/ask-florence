@@ -1,17 +1,13 @@
 from typing import Optional
 from sqlmodel import SQLModel, Field, create_engine, Session
 
-from pathlib import Path
-
-
-DATABASE_URL = "sqlite:///" + str(Path(__file__).parent / "db" / "florence.db")
-
 
 class NextOfKin(SQLModel, table=True):
     id: Optional[int] = Field(default=None, primary_key=True)
     first_name: str
     last_name: str
     phone_number: str
+    is_authenticated: bool = False
 
 
 class Patient(SQLModel, table=True):
@@ -27,13 +23,9 @@ class HealthcareProfessional(SQLModel, table=True):
     email: str
 
 
-def init_db():
-    engine = create_engine(DATABASE_URL)
+def init_db(database_url: str):
+    engine = create_engine(database_url)
     with Session(engine) as session:
         session.execute("PRAGMA foreign_keys=on")
         session.commit()
         SQLModel.metadata.create_all(engine)
-
-
-if __name__ == "__main__":
-    init_db()
