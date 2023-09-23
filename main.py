@@ -52,13 +52,14 @@ async def reply(
     from_number = From.replace("whatsapp:", "")
     next_of_kin = get_next_of_kin(session, from_number)
 
+    # reset command for testing only for demo purposes
     if Body.lower() == "!reset":
         next_of_kin.is_authenticated = False
         session.add(next_of_kin)
         session.commit()
         return ""
 
-    if next_of_kin.is_authenticated:
+    if next_of_kin and next_of_kin.is_authenticated:
         llm_response = chat_session.query(Body)
         sender.send_message(next_of_kin.phone_number, llm_response)
         return ""
@@ -66,23 +67,23 @@ async def reply(
     form_match = re.match(FORM_REGEX, Body)
 
     if not form_match:
-        send_unauthenticated_message(next_of_kin.phone_number)
+        send_unauthenticated_message(from_number)
         return ""
 
     parsed_form = parse_form_message(form_match)
     patient = get_patient(session, parsed_form["first_name"], parsed_form["last_name"])
     print(f"Found Patient {patient}")
 
-    if not patient or patient.next_of_kin_id != next_of_kin.id:
+    if not patient or not next_of_kin or patient.next_of_kin_id != next_of_kin.id:
         sender.send_message(
-            next_of_kin.phone_number,
+            from_number,
             "I'm sorry I didn't find any patients matching the information you provided. Please try again. 🙁",
         )
         return ""
 
     mark_next_of_kin_as_authenticated(session, next_of_kin.phone_number)
     sender.send_message(
-        next_of_kin.phone_number,
+        from_number,
         "The information you provided matches our records. I can now share information about your loved one's care. 👍",
     )
 
@@ -117,12 +118,14 @@ def parse_form_message(form_match) -> dict:
 
 
 def send_unauthenticated_message(to_number: str):
-    message = """Hi there! I'm Florence 👋
+    message = """Hi there! I'm Florence 👋 👩🏻‍⚕️
 
-I'm here to help you stay up to date with your loved one's care during their time in hospital 🏥
-In order to get started, I need to know some details about the patient you are inquiring about.
+I'm here to help you stay up to date with your loved one's care during their time in hospital 🏥.
+
+In order to get started, I need to know some details about the patient you are inquiring about 📝.
 
 Please reply with the following information in the exact format presented below:
+
 Patient First Name: <patient first name>
 Patient Last Name: <patient last name>
 Patient Date of Birth: <patient date of birth in the format DD/MM/YYYY>"""
