@@ -1,5 +1,5 @@
 from decouple import config
-from fastapi import FastAPI
+from fastapi import FastAPI, Form
 from twilio.rest import Client as TwilioClient
 
 from send_message import WhatsAppMessageSender
@@ -11,11 +11,12 @@ destination_number = config("DESTINATION_NUMBER")
 
 twilio_client = TwilioClient(account_sid, auth_token)
 sender = WhatsAppMessageSender(twilio_client, twilio_number)
-# sender.send_message(destination_number, "Hello from Twilio!")
 
 app = FastAPI()
 
 
-@app.get("/")
-async def index():
-    return {"msg": "up & running"}
+@app.post("/message")
+async def reply(Body: str = Form()):
+    echo_message = f"You said: {Body}"
+    sender.send_message(destination_number, echo_message)
+    return ""
