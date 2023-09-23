@@ -13,10 +13,7 @@ openai_api_key = config("OPENAI_API_KEY")
 
 twilio_client = TwilioClient(account_sid, auth_token)
 sender = WhatsAppMessageSender(twilio_client, twilio_number)
-
-
 session = ChatSession(patient_id=1)
-
 
 app = FastAPI()
 
