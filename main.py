@@ -53,7 +53,7 @@ async def reply(
     next_of_kin = get_next_of_kin(session, from_number)
 
     # reset command for testing only for demo purposes
-    if Body.lower() == "!reset":
+    if Body.lower() == "!reset" and next_of_kin:
         next_of_kin.is_authenticated = False
         session.add(next_of_kin)
         session.commit()
@@ -104,6 +104,9 @@ def get_patient(session: Session, first_name: str, last_name: str) -> Patient | 
 
 def mark_next_of_kin_as_authenticated(session: Session, phone_number: str):
     next_of_kin = get_next_of_kin(session, phone_number)
+    if not next_of_kin:
+        return
+
     next_of_kin.is_authenticated = True
     session.add(next_of_kin)
     session.commit()

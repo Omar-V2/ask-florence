@@ -15,15 +15,15 @@ def seed_database(database_url: str):
     session.commit()  # commit to get the id of new_healthcare_professional
 
     # Insert a Patient linked to the HealthcareProfessional
-    new_patient = Patient(
+    john_doe = Patient(
         first_name="John",
         last_name="Doe",
         patient_number="4857773456",
         healthcare_professional_id=new_healthcare_professional.id,
     )
 
-    # Insert a next of kin
-    new_next_of_kin = NextOfKin(
+    # Insert a next of kin for John
+    jane_doe = NextOfKin(
         id=1,
         first_name="Jane",
         last_name="Doe",
@@ -31,8 +31,31 @@ def seed_database(database_url: str):
         is_authenticated=False,
     )
 
-    new_patient.next_of_kin_id = new_next_of_kin.id
+    john_doe.next_of_kin_id = jane_doe.id
 
-    session.add(new_patient)
-    session.add(new_next_of_kin)
+    session.add(john_doe)
+    session.add(jane_doe)
+
+    # Insert a new different Patient linked to the same HealthcareProfessional
+    sally_smith = Patient(
+        first_name="Sally",
+        last_name="Smith",
+        patient_number="4857773457",
+        healthcare_professional_id=new_healthcare_professional.id,
+    )
+
+    # Insert a next of kin for Sally
+    jack_smith = NextOfKin(
+        id=2,
+        first_name="Jack",
+        last_name="Smith",
+        phone_number="+447500513651",
+        is_authenticated=False,
+    )
+
+    sally_smith.next_of_kin_id = jack_smith.id
+
+    session.add(sally_smith)
+    session.add(jack_smith)
+
     session.commit()
