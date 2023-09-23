@@ -1,5 +1,5 @@
 ---
-[2023-09-23T08:15]
+[2023-09-23 08:15]
 
 Admission Notes:
 
@@ -8,7 +8,7 @@ Admission Notes:
 - ECG: ST depression
 - Rx: Aspirin 300 mg, GTN (Glyceryl Trinitrate) spray, IV fluids, Clopidogrel 200mg
 ---
-[2023-09-23T10:08]
+[2023-09-23 10:08]
 
 Blood Tests:
 
@@ -22,7 +22,7 @@ Differential Diagnoses:
 - Heart Failure
 - Anxiety
 ---
-[2023-09-23T11:30]
+[2023-09-23 11:30]
 
 - ECG: Possible ischaemia
 - Cardiology consult initiated
@@ -32,7 +32,7 @@ Probable Diagnosis:
 - ACS given the raised Troponins and ECG changes
     - Possible NSTEMI
 ---
-[2023-09-23T11:45]
+[2023-09-23 11:45]
 
 - Bloods: Troponin now 80 ng/L (further raised)
 - Start Heparin infusion
@@ -41,7 +41,7 @@ Plan:
 
 - Admit to AMU, refer to cardiology
 ---
-[2023-09-24T08:40]
+[2023-09-24 08:40]
 
 In AMU
 
@@ -64,7 +64,7 @@ Plan:
 
 - Continue medical treatment, prep for coronary angiogram
 ---
-[2023-09-25T08:30]
+[2023-09-25 08:30]
 
 08:30 Ward Round Notes:
 
@@ -86,13 +86,13 @@ Blood Tests:
 
 - Troponin: 40 ng/L (improving but still raised)
 ---
-[2023-09-25T11:00]
+[2023-09-25 11:00]
 
 - Mobilising with aid
 - Obs stable,
 - Plan: continue current treamtne
 ---
-[2023-09-25T18:00]
+[2023-09-25 18:00]
 
 - Pt complaining of acute chest pain, increased breathlessness
 - ECG: New changes, Troponin rises to 90 ng/L
@@ -103,10 +103,10 @@ Blood Tests:
 
 ### Plan:
 
-- Urgent cardiology referral, possible intervention
+- Urgent cardiology referral, possible angiogram
 
 ---
-[2023-09-26T08:50]
+[2023-09-26 08:50]
 
 08:50 Ward Round Notes:
 
@@ -126,7 +126,7 @@ Blood Tests:
 
 - Troponin: 30 ng/L (improving)
 ---
-[2023-09-26T12:45]
+[2023-09-26 12:45]
 
 - Preparing for discharge
 - Awaiting final lab results
@@ -136,7 +136,7 @@ Plan:
 - Prepare for discharge if stable
 
 ---
-[2023-09-27T08:20]
+[2023-09-27 08:20]
 
 Ward Round Notes:
 
@@ -155,7 +155,7 @@ Ward Round Notes:
 - MFFD
 
 ---
-[2023-09-28T08:35]
+[2023-09-28 08:35]
 
 Pre-Discharge Assessment:
 
@@ -168,8 +168,28 @@ Discharge Summary:
 - Arrange follow-up and discharge meds
 
 ---
-[2023-09-29T08:35]
+[2023-09-29 08:35]
 
 Follow-up:
 
 - Outpatient appointment booked for 31/10/2023
+---
+[2023-09-23 23:57]
+
+Next of kin initiated a conversation with Florence. View chat at:
+https://async-doc-demo.s3.amazonaws.com/4857773456_1695509859.901599
+---
+[2023-09-23 23:58]
+
+Next of kin initiated a conversation with Florence. View chat at:
+https://async-doc-demo.s3.amazonaws.com/4857773456_1695509882.5674932
+---
+[2023-09-23 23:58]
+
+Next of kin initiated a conversation with Florence. View chat at:
+https://async-doc-demo.s3.amazonaws.com/4857773456_1695509894.433917
+---
+[2023-09-23 23:59]
+
+Next of kin initiated a conversation with Florence. View chat at:
+https://async-doc-demo.s3.amazonaws.com/4857773456_1695509955.510875

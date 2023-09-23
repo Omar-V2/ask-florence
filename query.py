@@ -24,7 +24,7 @@ from chat_history import upload_chat_history_to_s3
 class ChatSession:
     def __init__(self, patient_number: str):
         self._patient_number = patient_number
-        self._model = ChatOpenAI()
+        self._model = ChatOpenAI(model_name='gpt-4')
         self._prompt = ChatPromptTemplate.from_template(PROMPT_TEMPLATE)
 
         self._chat_key = patient_number + "_" + str(time.time())
@@ -37,17 +37,17 @@ class ChatSession:
         vector_store = FAISS.from_texts(ehr_entries, embedding=OpenAIEmbeddings())
         chain = (
             {
-                "condition_deny_categories": lambda _: "\n,".join(
-                    CONDITION_DENY_CATEGORIES
-                ),
+                #"condition_deny_categories": lambda _: "\n,".join(
+                #    CONDITION_DENY_CATEGORIES
+                #),
                 "context": vector_store.as_retriever(),
                 "user_deny_message": lambda _: USER_DENY_MESSAGE,
                 "question": RunnablePassthrough(),
-                "medical_dictionary": (
-                    lambda _: "\n".join(
-                        f"{k}: {v}" for k, v in MEDICAL_DICTIONARY.items()
-                    )
-                ),
+                #"medical_dictionary": (
+                #    lambda _: "\n".join(
+                #        f"{k}: {v}" for k, v in MEDICAL_DICTIONARY.items()
+                #    )
+                #),
             }
             | self._prompt
             | self._model
@@ -98,3 +98,7 @@ def _add_chat_to_ehr(patient_number: str, chat_url: str) -> None:
 
     # Save the modified document
     doc.save(str(EHR_BASE_PATH / (patient_number + ".docx")))
+
+
+session = ChatSession(patient_number="4857773456")
+print(session.query("How was the patient on Wednesday?"))
