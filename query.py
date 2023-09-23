@@ -37,13 +37,17 @@ class ChatSession:
         vector_store = FAISS.from_texts(ehr_entries, embedding=OpenAIEmbeddings())
         chain = (
             {
-                "condition_deny_categories": lambda _: "\n,".join(CONDITION_DENY_CATEGORIES),
+                "condition_deny_categories": lambda _: "\n,".join(
+                    CONDITION_DENY_CATEGORIES
+                ),
                 "context": vector_store.as_retriever(),
                 "user_deny_message": lambda _: USER_DENY_MESSAGE,
                 "question": RunnablePassthrough(),
                 "medical_dictionary": (
-                    lambda _: "\n".join(f"{k}: {v}" for k, v in MEDICAL_DICTIONARY.items())
-                )
+                    lambda _: "\n".join(
+                        f"{k}: {v}" for k, v in MEDICAL_DICTIONARY.items()
+                    )
+                ),
             }
             | self._prompt
             | self._model
@@ -79,6 +83,7 @@ def _fetch_and_parse_ehr(patient_number: str) -> list[str]:
     for paragraph in doc.paragraphs:
         fullText.append(paragraph.text)
 
+<<<<<<< HEAD
     return '\n'.join(fullText).split("---")
 
 
@@ -98,3 +103,6 @@ def _add_chat_to_ehr(patient_number: str, chat_url: str) -> None:
 
 session = ChatSession(patient_number="4857773456")
 session.query("Was the patient comfortable yesterday?")
+=======
+    return "\n".join(fullText).split("---")
+>>>>>>> 0a0fe300f956eb1fdc2e5054610d4abffcd25394
