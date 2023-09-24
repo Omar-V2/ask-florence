@@ -27,7 +27,7 @@ class ChatSession:
         self._model = ChatOpenAI(model_name="gpt-4")
         self._prompt = ChatPromptTemplate.from_template(PROMPT_TEMPLATE)
 
-        self._chat_key = patient_number + "_" + str(time.time())
+        self._chat_key = "demo-day"  # hard code for demo :)
         self._chat_history = []
         self._chat_url = f"https://{BUCKET_NAME}.s3.amazonaws.com/{self._chat_key}"
         upload_chat_history_to_s3(self._chat_key, [])
