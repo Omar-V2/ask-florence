@@ -1,6 +1,6 @@
 # Ask Florence
 
-Ask Florence, named after Florence Nightingale, is a GenAI application that allows family members to query about their patients in care, alleviating the burden on doctors and medical staff. This app was built was part of the Imperial GenAI x Healthcare hackathon.
+Ask Florence, named after [Florence Nightingale](https://en.wikipedia.org/wiki/Florence_Nightingale), is a GenAI application that allows family members to query about their patients in care, alleviating the burden on doctors and medical staff. This app was built was part of the Imperial GenAI x Healthcare hackathon.
 
 Im proud to have worked on this project with my friends Jannic and Moneim!
 
