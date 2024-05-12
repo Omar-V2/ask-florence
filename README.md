@@ -16,4 +16,5 @@ Ask florence is a GenAI, WhatsApp based chatbot that uses retrieval augmented ge
 
 ## Demo
 
-![Ask Florence](./assets/ask-florence-demo.MP4)
+https://github.com/Omar-V2/async-doc/assets/41272547/b900a20b-ddbb-4c23-9b1d-e6870cecd54b
+
