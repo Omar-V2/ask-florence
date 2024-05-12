@@ -38,7 +38,7 @@ def seed_database(database_url: str):
 
     # Insert a new different Patient linked to the same HealthcareProfessional
     sally_smith = Patient(
-        first_name="Sally",
+        first_name="John",
         last_name="Smith",
         patient_number="4857773457",
         healthcare_professional_id=new_healthcare_professional.id,
@@ -47,9 +47,9 @@ def seed_database(database_url: str):
     # Insert a next of kin for Sally
     jack_smith = NextOfKin(
         id=2,
-        first_name="Jack",
+        first_name="Sally",
         last_name="Smith",
-        phone_number="+447500513651",
+        phone_number="+447960852993",
         is_authenticated=False,
     )
 
