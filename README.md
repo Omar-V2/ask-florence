@@ -6,7 +6,7 @@ I'm proud to have worked on this project with my friends [Jannic](https://github
 
 ## The Problem
 
-Doctors spend a large amount of time taking calls from family members of admitted patients, providing updates, answering questions and relieving concerns. This activity in and of itself doesn't improve the care of the admitted patient, yet doctors feel a moral obligation to perform it. patient.
+Doctors spend a large amount of time taking calls from family members of admitted patients, providing updates, answering questions and relieving concerns. This activity in and of itself doesn't improve the care of the admitted patient, yet doctors feel a moral obligation to perform it.
 
 ## The Solution
 
